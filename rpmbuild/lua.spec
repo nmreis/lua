@@ -1,13 +1,13 @@
 %global major_version 5.2
 
-Name:           lua
+Name:           lua52
 Version:        %{major_version}.2
 Release:        7%{?dist}
 Summary:        Powerful light-weight programming language
 Group:          Development/Languages
 License:        MIT
 URL:            http://www.lua.org/
-Source0:        http://www.lua.org/ftp/lua-%{version}.tar.gz
+Source0:        http://www.lua.org/ftp/lua52-%{version}.tar.gz
 # copied from doc/readme.html on 2014-07-18
 Source1:	mit.txt
 Patch0:         %{name}-%{version}-autotoolize.patch
@@ -16,7 +16,7 @@ Patch2:         %{name}-%{version}-luac-shared-link-fix.patch
 Patch3:         %{name}-%{version}-configure-linux.patch
 Patch4:		%{name}-%{version}-configure-compat-module.patch
 BuildRequires:  automake autoconf libtool readline-devel ncurses-devel
-Provides:       lua(abi) = %{major_version}
+Provides:       lua52(abi) = %{major_version}
 
 %description
 Lua is a powerful light-weight programming language designed for
@@ -75,16 +75,23 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/lua/%{major_version}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/lua/%{major_version}
+mv %{buildroot}/%{_bindir}/lua %{buildroot}/%{_bindir}/lua52
+mv %{buildroot}/%{_bindir}/luac %{buildroot}/%{_bindir}/luac52
+mv %{buildroot}/%{_libdir}/liblua.so %{buildroot}/%{_libdir}/liblua52.so
+mv %{buildroot}/%{_libdir}/pkgconfig/lua.pc %{buildroot}/%{_libdir}/pkgconfig/lua52.pc
+mv %{buildroot}/%{_mandir}/man1/lua.1 %{buildroot}/%{_mandir}/man1/lua52.1
+mv %{buildroot}/%{_mandir}/man1/luac.1 %{buildroot}/%{_mandir}/man1/luac52.1
 
 
 %files
 %{!?_licensedir:%global license %%doc}
 %license mit.txt
 %doc README doc/*.html doc/*.css doc/*.gif doc/*.png
-%{_bindir}/lua
-%{_bindir}/luac
+%{_bindir}/lua52
+%{_bindir}/luac52
 %{_libdir}/liblua-5.2.so
-%{_mandir}/man1/lua*.1*
+%{_mandir}/man1/lua52.1*
+%{_mandir}/man1/luac52.1*
 %dir %{_libdir}/lua
 %dir %{_libdir}/lua/%{major_version}
 %dir %{_datadir}/lua
@@ -93,7 +100,7 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/lua/%{major_version}
 %files devel
 %{_includedir}/l*.h
 %{_includedir}/l*.hpp
-%{_libdir}/liblua.so
+%{_libdir}/liblua52.so
 %{_libdir}/pkgconfig/*.pc
 
 %files static
